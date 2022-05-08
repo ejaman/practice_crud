@@ -1,0 +1,19 @@
+{
+  "memos": [
+    {
+      "id": 1,
+      "title": "how to use quick memo",
+      "content": "just type it"
+    },
+    {
+      "id": 2,
+      "title": "first",
+      "content": "first note"
+    },
+    {
+      "title": "second",
+      "content": "second",
+      "id": 3
+    }
+  ]
+}

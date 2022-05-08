@@ -1,0 +1,15 @@
+.header {
+  background-color: red;
+}
+.nav {
+  background-color: rgb(245, 99, 99);
+}
+.article {
+  background-color: rgb(253, 166, 166);
+}
+.note {
+  background-color: rgb(252, 214, 214);
+}
+#control {
+  background-color: rgb(253, 232, 232);
+}
