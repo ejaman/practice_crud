@@ -85,6 +85,7 @@ const createHandler = (event) => {
 };
 
 const create = () => {
+  crud.innerHTML = " ";
   const content = `
   <form onsubmit="createHandler(event);">
       <p><input id="title" type="text" name="title" placeholder="title"></p>
