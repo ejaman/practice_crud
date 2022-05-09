@@ -4,10 +4,11 @@ const crud = document.getElementById("control");
 
 const welcome = () => {
   article.innerHTML = `
-  <h2>Welcome</h2>
-  lets make a quick memo 😎
+  <h1>Welcome</h1>
+  <h3>lets make a quick memo 😎</h3>
   `;
-  selectedId = "null";
+  selectedId = null;
+  article.style.border = "none";
   control(selectedId);
 };
 
@@ -19,6 +20,7 @@ const navHandler = (event) => {
 };
 
 const nav = () => {
+  document.querySelector("nav>ol").innerHTML = "loading....";
   fetch("http://localhost:3000/memos")
     .then((res) => res.json())
     .then((memo) => {
@@ -37,12 +39,13 @@ const nav = () => {
 };
 
 const read = (selectedId) => {
-  // read를 수정해야함
   console.log("read", selectedId);
+  article.style.border = "1px solid";
+  article.style.borderRadius = "10px";
   fetch("http://localhost:3000/memos/" + selectedId)
     .then((res) => res.json())
     .then((memo) => {
-      const content = `<h2>${memo.title}</h2>${memo.content}`;
+      const content = `<h2>${memo.title}</h2><p>${memo.content}</p>`;
       article.innerHTML = content;
       control(selectedId);
     });
@@ -50,16 +53,14 @@ const read = (selectedId) => {
 
 const control = (selectedId) => {
   let contextUI = "";
-  if (selectedId !== undefined) {
+  console.log(selectedId);
+  if (selectedId !== null) {
     contextUI = `
-        <li><a href="/update" onclick="event.preventDefault(); update(${selectedId});" >🤔 Edit!</a></li>
-        <li><a href="/delete" onclick="event.preventDefault(); del(${selectedId});" >🗑 Delete</a></li> 
+        <li><a href="/update" onclick="event.preventDefault(); update(${selectedId});" >📝</a></li>
+        <li><a href="/delete" onclick="event.preventDefault(); del(${selectedId});" >🗑 </a></li> 
     `;
   }
-  crud.innerHTML = `
-    <li><a href="/create" onclick="event.preventDefault(); create();">✏️ New note</a></li>
-    ${contextUI}
-`;
+  crud.innerHTML = `${contextUI}`;
 };
 
 const createHandler = (event) => {
