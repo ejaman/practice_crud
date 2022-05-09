@@ -40,8 +40,6 @@ const nav = () => {
 
 const read = (selectedId) => {
   console.log("read", selectedId);
-  article.style.border = "1px solid";
-  article.style.borderRadius = "10px";
   fetch("http://localhost:3000/memos/" + selectedId)
     .then((res) => res.json())
     .then((memo) => {
@@ -49,6 +47,8 @@ const read = (selectedId) => {
       article.innerHTML = content;
       control(selectedId);
     });
+  article.style.border = "1px solid";
+  article.style.borderRadius = "10px";
 };
 
 const control = (selectedId) => {
@@ -87,12 +87,14 @@ const createHandler = (event) => {
 const create = () => {
   const content = `
   <form onsubmit="createHandler(event);">
-      <p><input type="text" name="title" placeholder="title"></p>
-      <p><textarea name="content" placeholder="content"></textarea></p>
-      <p><input type="submit" value="➕"></p>
+      <p><input id="title" type="text" name="title" placeholder="title"></p>
+      <p><textarea id="content" name="content" placeholder="content"></textarea></p>
+      <p><input class="submitBtn" type="submit" value="➕"></p>
   </form>
 `;
-  note.innerHTML = content;
+  article.innerHTML = content;
+  article.style.border = "1px solid";
+  article.style.borderRadius = "10px";
 };
 
 function updateHandler(event, selectedId) {
@@ -122,16 +124,20 @@ const update = (selectedId) => {
     .then((res) => res.json())
     .then((memo) => {
       article.innerHTML = `
-    <h2>Update</h2>
     <form onsubmit="updateHandler(event,${selectedId})">
-        <p><input type="text" name="title" placeholder="title" value="${memo.title}"></p>
-        <p><textarea name="content" placeholder="content">${memo.content}</textarea></p>
-        <p><input type="submit" value="update"></p>
+        <p><input id="title" type="text" name="title" placeholder="title" value="${memo.title}"></p>
+        <p><textarea id="content" onkeydown="resize(this)" onkeyup="resize(this)" name="content" placeholder="content">${memo.content}</textarea></p>
+        <p><input class="submitBtn" type="submit" value="☑️"></p>
     </form>
   `;
       control(selectedId);
     });
 };
+
+function resize(obj) {
+  obj.style.height = "1px";
+  obj.style.height = 12 + obj.scrollHeight + "px";
+}
 
 const del = (selectedId) => {
   fetch("http://localhost:3000/memos/" + selectedId, {

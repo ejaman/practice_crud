@@ -18,6 +18,8 @@ a {
   color: black;
 }
 .create {
+  /* 수정하기 */
+  margin-left: 28em;
 }
 
 .makeLayout {
@@ -30,6 +32,7 @@ a {
 }
 .memo {
   flex: 0.75;
+  max-width: 800px;
   height: 90%;
 }
 .article {
@@ -42,9 +45,33 @@ a {
 .article p {
   text-align: left;
 }
-.note {
-  background-color: green;
+#title {
+  width: 100%;
+  padding: 0.5em;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  outline: none;
+  text-align: center;
 }
+#content {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  min-height: 200px;
+  font-size: 1em;
+  outline: none;
+  border: none;
+  overflow: hidden;
+}
+.submitBtn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+}
+.submitBtn:hover {
+  opacity: 0.7;
+}
+
 #control {
   text-align: center;
   display: flex;
