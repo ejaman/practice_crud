@@ -5,7 +5,7 @@ const crud = document.getElementById("control");
 const welcome = () => {
   article.innerHTML = `
   <h1>Welcome</h1>
-  <h3>lets make a quick memo 😎</h3>
+  <h3>lets make some quick memooo!!! 😎</h3>
   `;
   selectedId = null;
   article.style.border = "none";
@@ -113,7 +113,7 @@ function updateHandler(event, selectedId) {
     .then((data) => {
       nav();
       selectedId = data.id;
-      console.log(data);
+      console.log("data", data);
       read(selectedId);
     });
 }
@@ -127,7 +127,7 @@ const update = (selectedId) => {
     <form onsubmit="updateHandler(event,${selectedId})">
         <p><input id="title" type="text" name="title" placeholder="title" value="${memo.title}"></p>
         <p><textarea id="content" onkeydown="resize(this)" onkeyup="resize(this)" name="content" placeholder="content">${memo.content}</textarea></p>
-        <p><input class="submitBtn" type="submit" value="☑️"></p>
+        <p><input class="submitBtn" onclick="" type="submit" value="☑️"></p>
     </form>
   `;
       control(selectedId);
@@ -148,7 +148,6 @@ const del = (selectedId) => {
       nav();
       selectedId = null;
       welcome();
-      control();
     });
 };
 nav();
