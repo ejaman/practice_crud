@@ -17,10 +17,6 @@ a {
 .header a {
   color: black;
 }
-.create {
-  /* 수정하기 */
-  margin-left: 28em;
-}
 
 .makeLayout {
   height: 70vh;
