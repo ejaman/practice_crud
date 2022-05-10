@@ -4,6 +4,11 @@
       "title": "How to use quick memo",
       "content": "just type it!",
       "id": 2
+    },
+    {
+      "title": "click quick memo!",
+      "content": "check the welcome sign",
+      "id": 3
     }
   ]
 }
