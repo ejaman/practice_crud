@@ -21,7 +21,7 @@ const navHandler = (event) => {
 
 const nav = () => {
   document.querySelector("nav>ol").innerHTML = "loading....";
-  fetch("https://ejaman.github.io/practice_crud/crud_review/db.json")
+  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/db")
     .then((res) => res.json())
     .then((memo) => {
       const tag = memo
@@ -41,7 +41,7 @@ const nav = () => {
 const read = (selectedId) => {
   console.log("read", selectedId);
   fetch(
-    "https://ejaman.github.io/practice_crud/crud_review/db.json" + selectedId
+    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId
   )
     .then((res) => res.json())
     .then((memo) => {
@@ -69,7 +69,7 @@ const createHandler = (event) => {
   event.preventDefault();
   const t = event.target.title.value;
   const c = event.target.content.value;
-  fetch("https://ejaman.github.io/practice_crud/crud_review/db.json", {
+  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/db", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const createHandler = (event) => {
 };
 
 const create = () => {
-  crud.innerHTML = " ";
+  crud.innerHTML = "";
   const content = `
   <form onsubmit="createHandler(event);">
       <p><input id="title" type="text" name="title" placeholder="title"></p>
@@ -106,7 +106,7 @@ function updateHandler(event, selectedId) {
   const t = event.target.title.value;
   const c = event.target.content.value;
   fetch(
-    "https://ejaman.github.io/practice_crud/crud_review/db.json" + selectedId,
+    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId,
     {
       method: "PUT",
       headers: {
@@ -127,7 +127,7 @@ function updateHandler(event, selectedId) {
 const update = (selectedId) => {
   console.log("update", selectedId);
   fetch(
-    "https://ejaman.github.io/practice_crud/crud_review/db.json" + selectedId
+    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId
   )
     .then((res) => res.json())
     .then((memo) => {
@@ -149,7 +149,7 @@ function resize(obj) {
 
 const del = (selectedId) => {
   fetch(
-    "https://ejaman.github.io/practice_crud/crud_review/db.json" + selectedId,
+    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId,
     {
       method: "DELETE",
     }
