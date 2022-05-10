@@ -21,7 +21,7 @@ const navHandler = (event) => {
 
 const nav = () => {
   document.querySelector("nav>ol").innerHTML = "loading....";
-  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/db")
+  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/memos")
     .then((res) => res.json())
     .then((memo) => {
       const tag = memo
@@ -41,7 +41,8 @@ const nav = () => {
 const read = (selectedId) => {
   console.log("read", selectedId);
   fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId
+    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
+      selectedId
   )
     .then((res) => res.json())
     .then((memo) => {
@@ -69,7 +70,7 @@ const createHandler = (event) => {
   event.preventDefault();
   const t = event.target.title.value;
   const c = event.target.content.value;
-  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/db", {
+  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/memos", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -106,7 +107,8 @@ function updateHandler(event, selectedId) {
   const t = event.target.title.value;
   const c = event.target.content.value;
   fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId,
+    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
+      selectedId,
     {
       method: "PUT",
       headers: {
@@ -127,7 +129,8 @@ function updateHandler(event, selectedId) {
 const update = (selectedId) => {
   console.log("update", selectedId);
   fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId
+    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
+      selectedId
   )
     .then((res) => res.json())
     .then((memo) => {
@@ -149,7 +152,8 @@ function resize(obj) {
 
 const del = (selectedId) => {
   fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/db" + selectedId,
+    "https://my-json-server.typicode.com/ejaman/practice_crud/memos" +
+      selectedId,
     {
       method: "DELETE",
     }
