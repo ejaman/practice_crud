@@ -11,5 +11,8 @@
 1. crud_review
 
 2. crud_async
-3. crud_indecedDB
+
+1, 2 번의 차이점?
+
+3. crud_indecedDByvi ~/.zshrc
 4. crud_typescript

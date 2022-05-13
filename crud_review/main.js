@@ -21,7 +21,7 @@ const navHandler = (event) => {
 
 const nav = () => {
   document.querySelector("nav>ol").innerHTML = "loading....";
-  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/memos")
+  fetch("http://localhost:3000/memos")
     .then((res) => res.json())
     .then((memo) => {
       const tag = memo
@@ -40,10 +40,7 @@ const nav = () => {
 
 const read = (selectedId) => {
   console.log("read", selectedId);
-  fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
-      selectedId
-  )
+  fetch("http://localhost:3000/memos/" + selectedId)
     .then((res) => res.json())
     .then((memo) => {
       const content = `<h2>${memo.title}</h2><p>${memo.content}</p>`;
@@ -70,7 +67,7 @@ const createHandler = (event) => {
   event.preventDefault();
   const t = event.target.title.value;
   const c = event.target.content.value;
-  fetch("https://my-json-server.typicode.com/ejaman/practice_crud/memos", {
+  fetch("http://localhost:3000/memos/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -106,17 +103,13 @@ function updateHandler(event, selectedId) {
   console.log(event.target);
   const t = event.target.title.value;
   const c = event.target.content.value;
-  fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
-      selectedId,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ title: t, content: c }),
-    }
-  )
+  fetch("http://localhost:3000/memos/" + selectedId, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title: t, content: c }),
+  })
     .then((res) => res.json())
     .then((data) => {
       nav();
@@ -128,10 +121,7 @@ function updateHandler(event, selectedId) {
 
 const update = (selectedId) => {
   console.log("update", selectedId);
-  fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/memos/" +
-      selectedId
-  )
+  fetch("http://localhost:3000/memos/" + selectedId)
     .then((res) => res.json())
     .then((memo) => {
       article.innerHTML = `
@@ -151,13 +141,9 @@ function resize(obj) {
 }
 
 const del = (selectedId) => {
-  fetch(
-    "https://my-json-server.typicode.com/ejaman/practice_crud/memos" +
-      selectedId,
-    {
-      method: "DELETE",
-    }
-  )
+  fetch("http://localhost:3000/memos/" + selectedId, {
+    method: "DELETE",
+  })
     .then((res) => res.json())
     .then((data) => {
       nav();
