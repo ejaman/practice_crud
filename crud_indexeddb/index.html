@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRUD</title>
+    <!-- <script src="main.js" defer></script> -->
     <script src="database.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -29,7 +30,21 @@
         <ol></ol>
       </nav>
       <div class="memo">
-        <article class="article"></article>
+        <article class="article">
+          <form onsubmit="createHandler(event);">
+            <p>
+              <input id="title" type="text" name="title" placeholder="title" />
+            </p>
+            <p>
+              <textarea
+                id="content"
+                name="content"
+                placeholder="content"
+              ></textarea>
+            </p>
+            <p><input class="submitBtn" type="submit" value="➕" /></p>
+          </form>
+        </article>
         <ul id="control"></ul>
       </div>
     </div>

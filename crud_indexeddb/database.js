@@ -6,10 +6,13 @@ onRequest.onsuccess = () => {
 onRequest.onupgradeneeded = () => {
   const database = onRequest.result;
   // 객체저장소 ObjectStore 생성
+  // memosStore 저장소에 memos 테이블 생성
   const memosStore = database.createObjectStore("memos", {
     autoIncrement: true,
   });
-  // memosStore 저장소에 memos 테이블 생성
+  // first data
+  memosStore.put({ title: "how to use indexedDB", content: "idk" });
+  memosStore.put({ title: "lets find out", content: "ok!" });
 };
 
 // Name이 일치하지만 존재하는 db가 없거나 호출에 실패했을 때
@@ -61,4 +64,4 @@ const clearAllEntries = (storeName) => {
   store.clear();
 };
 
-export { onRequest, addEntryToDB, getEntryFromDB, clearAllEntries };
+// export { onRequest, addEntryToDB, getEntryFromDB, clearAllEntries };
