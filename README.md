@@ -14,5 +14,6 @@
 
 1, 2 번의 차이점?
 
-3. crud_indecedDByvi ~/.zshrc
+3. crud_indexedDB
+   3-1. indexedDB란?
 4. crud_typescript
