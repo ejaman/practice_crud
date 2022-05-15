@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CRUD</title>
-    <!-- <script src="main.js" defer></script> -->
+    <script src="index.js" defer></script>
     <script src="database.js" defer></script>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -23,29 +23,14 @@
     <div class="makeLayout">
       <nav class="nav">
         <h3 class="create">
-          <a href="/create" onclick="event.preventDefault(); create();"
-            >✏️ New note</a
-          >
+          <a href="/create" onclick="event.preventDefault(); ">✏️ New note</a>
         </h3>
         <ol></ol>
       </nav>
       <div class="memo">
         <article class="article">
-          <!-- <h1>Welcome</h1>
-          <h3>lets make some quick memooo!!! 😎</h3> -->
-          <form onsubmit="createHandler(event);">
-            <p>
-              <input id="title" type="text" name="title" placeholder="title" />
-            </p>
-            <p>
-              <textarea
-                id="content"
-                name="content"
-                placeholder="content"
-              ></textarea>
-            </p>
-            <p><input class="submitBtn" type="submit" value="➕" /></p>
-          </form>
+          <h1>Welcome</h1>
+          <h3>lets make some quick memooo!!! 😎</h3>
         </article>
         <ul id="control"></ul>
       </div>
