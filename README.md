@@ -16,4 +16,11 @@
 
 3. crud_indexedDB
    3-1. indexedDB란?
+
+   해야할 일
+
+   1. indexedDB update 기능
+   2. indexedDB delete 기능
+   3. module화
+
 4. crud_typescript

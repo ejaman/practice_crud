@@ -1,3 +1,7 @@
+const article = document.querySelector(".article");
+const note = document.querySelector(".note");
+const crud = document.getElementById("control");
+
 // 데이터베이스 열기
 let onRequest = indexedDB.open("memoDB", 1);
 
@@ -14,8 +18,6 @@ onRequest.onupgradeneeded = () => {
   const memosStore = database.createObjectStore("memos", {
     autoIncrement: true,
   });
-  // memosStore.createIndex("title", ["title"], { unique: false });
-  // memosStore.createIndex("content", ["content"], { unique: false });
   // first data
   memosStore.put({
     title: "how to use indexedDB",
@@ -25,39 +27,40 @@ onRequest.onupgradeneeded = () => {
 
 onRequest.onsuccess = async () => {
   console.log("success");
-  await check();
-  // addEntryToDb();
+  await nav();
 };
 
-const addMemos = () => {
-  const database = onRequest.result;
-  const transaction = database.transaction("memos", "readwrite");
-  const memos = transaction.objectStore("memos");
-  const memo = {
-    title: "lets find out",
-    content: "ok!",
-  };
-  memos.add(memo);
+const nav = async () => {
+  const checkEntries = await getEntryFromDb();
+  const entries = checkEntries
+    .map(
+      (entry, idx) => `
+  <li>
+    <a href="/memos/${idx}" id="${idx}" onclick="navHandler(event);">
+        ${entry.title}
+    </a>
+  </li>`
+    )
+    .join("");
+  console.log(checkEntries);
+
+  document.querySelector("nav>ol").innerHTML = entries;
 };
-// 사용자가 입력한 데이터를 데이터 베이스에 추가
-const addEntryToDb = () => {
-  const database = onRequest.result;
-  const transaction = database.transaction("memos", "readwrite");
-  const memos = transaction.objectStore("memos");
-  const entry = {
-    title: "add entry to db",
-    content: "ok!",
-  };
-  memos.add(entry);
+const navHandler = (event) => {
+  event.preventDefault();
+  console.log(event.target);
+  let selectedId = 1 * event.target.id;
+  console.log("nav", selectedId);
+  read(selectedId);
 };
 
 // 데이터베이스에 저장된 데이터를 화면에 렌더링
-const getEntryFromDb = (id) => {
+const getEntryFromDb = () => {
   const data = new Promise((resolve, reject) => {
     const database = onRequest.result;
     const transaction = database.transaction("memos", "readwrite");
     const memos = transaction.objectStore("memos");
-    const request = id ? memos.get(id) : memos.getAll();
+    const request = memos.getAll();
     request.onerror = () => {
       reject(request.error);
       console.log("error getting data from the store");
@@ -69,18 +72,55 @@ const getEntryFromDb = (id) => {
   });
   return Promise.resolve(data);
 };
-const check = async () => {
-  const checkInfo = await getEntryFromDb();
-  const info = `<div>${checkInfo[0] ? checkInfo[0].title : "title?"}</div>`;
-  article.innerHTML = info;
+const read = async (id) => {
+  const checkEntries = await getEntryFromDb();
+  const memo = `<h2>${checkEntries[id].title}</h2><p>${checkEntries[id].content}</p>`;
+  article.innerHTML = memo;
+  control(id);
+  article.style.border = "1px solid";
+  article.style.borderRadius = "10px";
 };
 
-const clearAllEntries = () => {
+// 사용자가 입력한 데이터를 데이터 베이스에 추가
+const create = () => {
+  crud.innerHTML = "";
+  const content = `
+  <form onsubmit="createHandler(event);">
+      <p><input id="title" type="text" name="title" placeholder="title"></p>
+      <p><textarea id="content" name="content" placeholder="content"></textarea></p>
+      <p><input class="submitBtn" type="submit" value="➕"></p>
+  </form>
+`;
+  article.innerHTML = content;
+  article.style.border = "1px solid";
+  article.style.borderRadius = "10px";
+};
+const createHandler = async (event) => {
+  event.preventDefault();
   const database = onRequest.result;
   const transaction = database.transaction("memos", "readwrite");
   const memos = transaction.objectStore("memos");
-  memos.clear();
+  const t = event.target.title.value;
+  const c = event.target.content.value;
+  const memo = {
+    title: t,
+    content: c,
+  };
+  memos.add(memo);
+  nav();
+  // read();
 };
 
-const article = document.querySelector(".article");
-const note = document.querySelector(".note");
+const control = (selectedId) => {
+  let contextUI = "";
+  console.log(selectedId);
+  if (selectedId !== null) {
+    contextUI = `
+        <li><a href="/update" onclick="event.preventDefault(); update(${selectedId});" >📝</a></li>
+        <li><a href="/delete" onclick="event.preventDefault(); del(${selectedId});" >🗑 </a></li> 
+    `;
+  }
+  crud.innerHTML = `${contextUI}`;
+};
+// update
+// delelte
