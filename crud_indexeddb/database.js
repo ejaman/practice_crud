@@ -30,6 +30,16 @@ onRequest.onsuccess = async () => {
   await nav();
 };
 
+const welcome = () => {
+  article.innerHTML = `
+  <h1>Welcome</h1>
+  <h3>lets make some quick memooo!!! 😎</h3>
+  `;
+  selectedId = null;
+  article.style.border = "none";
+  control(selectedId);
+};
+
 const nav = async () => {
   const checkEntries = await getEntryFromDb();
   const entries = checkEntries
@@ -42,7 +52,6 @@ const nav = async () => {
   </li>`
     )
     .join("");
-  console.log(checkEntries);
 
   document.querySelector("nav>ol").innerHTML = entries;
 };
@@ -81,7 +90,7 @@ const read = async (id) => {
   article.innerHTML = memo;
   article.style.border = "1px solid";
   article.style.borderRadius = "10px";
-  control(id, title);
+  control(id);
 };
 
 // 사용자가 입력한 데이터를 데이터 베이스에 추가
@@ -114,26 +123,36 @@ const createHandler = async (event) => {
   // read();
 };
 
-const control = (selectedId, title) => {
+const control = (selectedId) => {
   let contextUI = "";
-  console.log(selectedId, title);
+  console.log(selectedId);
   if (selectedId !== null) {
     contextUI = `
-        <li><a href="/update" onclick="event.preventDefault(); update(${selectedId});" >📝</a></li>
-        <li><a href="/delete" onclick="event.preventDefault(); del(${title});" >🗑 </a></li> 
+        <li><a href="/update" onclick="event.preventDefault(); update();" >📝</a></li>
+        <li><a href="/delete" onclick="event.preventDefault(); resetNote();" >🗑 </a></li> 
     `;
   }
+  console.log("check this", contextUI);
   crud.innerHTML = `${contextUI}`;
 };
 
 // update
-const update = () => {};
+
 // delelte
-const del = async (title) => {
-  console.log("title", title);
+const del = async () => {
   const database = onRequest.result;
   const transaction = database.transaction("memos", "readwrite");
   const memos = transaction.objectStore("memos");
   memos.delete(memos);
   nav();
+};
+
+// delete all
+const resetNote = () => {
+  const database = onRequest.result;
+  const transaction = database.transaction("memos", "readwrite");
+  const memos = transaction.objectStore("memos");
+  memos.clear();
+  nav();
+  welcome();
 };
