@@ -74,11 +74,14 @@ const getEntryFromDb = () => {
 };
 const read = async (id) => {
   const checkEntries = await getEntryFromDb();
-  const memo = `<h2>${checkEntries[id].title}</h2><p>${checkEntries[id].content}</p>`;
+  const title = checkEntries[id].title;
+  const content = checkEntries[id].content;
+  console.log("read", title);
+  const memo = `<h2>${title}</h2><p>${content}</p>`;
   article.innerHTML = memo;
-  control(id);
   article.style.border = "1px solid";
   article.style.borderRadius = "10px";
+  control(id, title);
 };
 
 // 사용자가 입력한 데이터를 데이터 베이스에 추가
@@ -111,16 +114,26 @@ const createHandler = async (event) => {
   // read();
 };
 
-const control = (selectedId) => {
+const control = (selectedId, title) => {
   let contextUI = "";
-  console.log(selectedId);
+  console.log(selectedId, title);
   if (selectedId !== null) {
     contextUI = `
         <li><a href="/update" onclick="event.preventDefault(); update(${selectedId});" >📝</a></li>
-        <li><a href="/delete" onclick="event.preventDefault(); del(${selectedId});" >🗑 </a></li> 
+        <li><a href="/delete" onclick="event.preventDefault(); del(${title});" >🗑 </a></li> 
     `;
   }
   crud.innerHTML = `${contextUI}`;
 };
+
 // update
+const update = () => {};
 // delelte
+const del = async (title) => {
+  console.log("title", title);
+  const database = onRequest.result;
+  const transaction = database.transaction("memos", "readwrite");
+  const memos = transaction.objectStore("memos");
+  memos.delete(memos);
+  nav();
+};
