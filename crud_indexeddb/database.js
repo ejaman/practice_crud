@@ -16,7 +16,8 @@ onRequest.onupgradeneeded = () => {
   // 객체저장소 ObjectStore 생성 (= collection, table)
   // memosStore 저장소에 memos 테이블 생성( 오브젝트 스토어 생성 )
   const memosStore = database.createObjectStore("memos", {
-    autoIncrement: true,
+    keyPath: "id", // id를 객체의 식별자로 사용하겠다
+    autoIncrement: true, // 오브젝트 스토어에 객체가 추가될 때 마다 아이디값이 자동으로 1씩 증가
   });
   // first data
   memosStore.put({
@@ -57,13 +58,20 @@ const nav = async () => {
 };
 const navHandler = (event) => {
   event.preventDefault();
-  console.log(event.target);
+  console.log("event target", event.target);
   let selectedId = 1 * event.target.id;
+
   console.log("nav", selectedId);
-  read(selectedId);
+  readHandler(selectedId);
 };
 
 // 데이터베이스에 저장된 데이터를 화면에 렌더링
+const readHandler = async (id) => {
+  const database = onRequest.result;
+  const transaction = database.transaction("memos", "readonly"); // 성능 향상을 위해
+  const memos = transaction.objectStore("memos");
+  console.log("id: ", memos.get(id));
+};
 const getEntryFromDb = () => {
   const data = new Promise((resolve, reject) => {
     const database = onRequest.result;
@@ -81,6 +89,7 @@ const getEntryFromDb = () => {
   });
   return Promise.resolve(data);
 };
+
 const read = async (id) => {
   const checkEntries = await getEntryFromDb();
   const title = checkEntries[id].title;
